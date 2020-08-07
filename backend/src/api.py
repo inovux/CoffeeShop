@@ -44,6 +44,10 @@ def get_drinks():
         or appropriate status code indicating reason for failure
 '''
 
+@app.route('/drinks-detail', methods=['GET'])
+def get_drinks_detail():
+    return 'Drinks detail route'
+
 '''
 @TODO implement endpoint
     POST /drinks
