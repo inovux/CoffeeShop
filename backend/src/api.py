@@ -44,9 +44,11 @@ def get_drinks():
         or appropriate status code indicating reason for failure
 '''
 
+
 @app.route('/drinks-detail', methods=['GET'])
 def get_drinks_detail():
-    return 'Drinks detail route'
+    return jsonify({"success": True, "drinks": []})
+g
 
 '''
 @TODO implement endpoint
