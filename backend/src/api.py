@@ -48,7 +48,7 @@ def get_drinks():
 @app.route('/drinks-detail', methods=['GET'])
 def get_drinks_detail():
     return jsonify({"success": True, "drinks": []})
-g
+
 
 '''
 @TODO implement endpoint
