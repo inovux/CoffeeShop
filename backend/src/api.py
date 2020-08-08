@@ -46,6 +46,7 @@ def get_drinks():
 
 
 @app.route('/drinks-detail', methods=['GET'])
+@requires_auth()
 def get_drinks_detail():
     return jsonify({"success": True, "drinks": []})
 
