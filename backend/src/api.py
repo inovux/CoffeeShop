@@ -60,6 +60,31 @@ def get_drinks_detail():
         or appropriate status code indicating reason for failure
 '''
 
+
+@app.route('/drinks', methods=['POST'])
+@requires_auth('post:drinks')
+def create_drink():
+    try:
+        body = request.get_json()
+
+        new_title = body.get('title', None)
+        new_recipe = json.dumps(body.get('recipe', None))
+
+        drink = Drink(
+            title=new_title,
+            recipe=new_recipe
+        )
+
+        drink.insert()
+
+        return jsonify({
+            'success': True,
+            'drinks': drink.long()
+        })
+    except:
+        abort(422)
+
+
 '''
 @TODO implement endpoint
     PATCH /drinks/<id>
@@ -82,6 +107,7 @@ def get_drinks_detail():
     returns status code 200 and json {"success": True, "delete": id} where id is the id of the deleted record
         or appropriate status code indicating reason for failure
 '''
+
 
 ## Error Handling
 
