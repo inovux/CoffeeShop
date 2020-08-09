@@ -35,20 +35,19 @@ def get_drinks():
         abort(422)
 
 
-'''
-@TODO implement endpoint
-    GET /drinks-detail
-        it should require the 'get:drinks-detail' permission
-        it should contain the drink.long() data representation
-    returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
-        or appropriate status code indicating reason for failure
-'''
-
-
 @app.route('/drinks-detail', methods=['GET'])
 @requires_auth('get:drinks-detail')
-def get_drinks_detail():
-    return jsonify({"success": True, "drinks": []})
+def get_drinks_detail(payload):
+    try:
+        drinks = Drink.query.all()
+        formatted_drinks = [drink.long() for drink in drinks]
+
+        return jsonify({
+            "success": True,
+            "drinks": formatted_drinks
+        })
+    except:
+        abort(422)
 
 
 '''
