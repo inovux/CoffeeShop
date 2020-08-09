@@ -37,7 +37,7 @@ def get_drinks():
 
 @app.route('/drinks-detail', methods=['GET'])
 @requires_auth('get:drinks-detail')
-def get_drinks_detail(payload):
+def get_drinks_detail():
     try:
         drinks = Drink.query.all()
         formatted_drinks = [drink.long() for drink in drinks]
@@ -84,10 +84,6 @@ def get_drinks_detail(payload):
 '''
 
 ## Error Handling
-'''
-Example error handling for unprocessable entity
-'''
-
 
 @app.errorhandler(422)
 def unprocessable(error):
@@ -98,21 +94,13 @@ def unprocessable(error):
     }), 422
 
 
-'''
-@TODO implement error handlers using the @app.errorhandler(error) decorator
-    each error handler should return (with approprate messages):
-             jsonify({
-                    "success": False, 
-                    "error": 404,
-                    "message": "resource not found"
-                    }), 404
-
-'''
-
-'''
-@TODO implement error handler for 404
-    error handler should conform to general task above 
-'''
+@app.errorhandler(404)
+def error_404():
+    return jsonify({
+        "success": False,
+        "error": 404,
+        "message": "resource not found"
+    }), 404
 
 
 @app.errorhandler(AuthError)
