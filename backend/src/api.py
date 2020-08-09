@@ -18,7 +18,7 @@ CORS(app)
 '''
 
 
-# db_drop_and_create_all()
+db_drop_and_create_all()
 
 ## ROUTES
 @app.route('/drinks', methods=['GET'])
@@ -109,17 +109,19 @@ def update_drink(drink_id):
     try:
         body = request.get_json()
 
-        updated_title = body.get('title')
-        updated_recipe = json.dumps(body.get('recipe'))
+        updated_title = body.get('title', None)
+        updated_recipe = body.get('recipe', None)
 
-        drink.title = updated_title
-        drink.recipe = updated_recipe
+        if updated_title is not None:
+            drink.title = updated_title
+        if updated_recipe is not None:
+            drink.recipe = json.dumps(updated_recipe)
 
         drink.update()
 
         return jsonify({
             'success': True,
-            'drinks': drink.long()
+            'drinks': [drink.long()]
         })
     except:
         abort(422)
