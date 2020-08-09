@@ -97,6 +97,34 @@ def create_drink():
         or appropriate status code indicating reason for failure
 '''
 
+
+@app.route('/drinks/<int:drink_id>', methods=['PATCH'])
+@requires_auth('patch:drinks')
+def update_drink(drink_id):
+    drink = Drink.query.filter(Drink.id == drink_id).one_or_none()
+
+    if drink is None:
+        abort(404)
+
+    try:
+        body = request.get_json()
+
+        updated_title = body.get('title')
+        updated_recipe = json.dumps(body.get('recipe'))
+
+        drink.title = updated_title
+        drink.recipe = updated_recipe
+
+        drink.update()
+
+        return jsonify({
+            'success': True,
+            'drinks': drink.long()
+        })
+    except:
+        abort(422)
+
+
 '''
 @TODO implement endpoint
     DELETE /drinks/<id>
@@ -121,7 +149,7 @@ def unprocessable(error):
 
 
 @app.errorhandler(404)
-def error_404():
+def error_404(error):
     return jsonify({
         "success": False,
         "error": 404,
