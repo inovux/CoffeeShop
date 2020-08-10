@@ -20,7 +20,9 @@ CORS(app)
 
 db_drop_and_create_all()
 
-## ROUTES
+# ROUTES
+
+
 @app.route('/drinks', methods=['GET'])
 def get_drinks():
     try:
@@ -31,7 +33,7 @@ def get_drinks():
             "success": True,
             "drinks": formatted_drinks
         })
-    except:
+    except Exception:
         abort(422)
 
 
@@ -46,7 +48,7 @@ def get_drinks_detail():
             "success": True,
             "drinks": formatted_drinks
         })
-    except:
+    except Exception:
         abort(422)
 
 
@@ -70,7 +72,7 @@ def create_drink():
             'success': True,
             'drinks': drink.long()
         })
-    except:
+    except Exception:
         abort(422)
 
 
@@ -99,7 +101,7 @@ def update_drink(drink_id):
             'success': True,
             'drinks': [drink.long()]
         })
-    except:
+    except Exception:
         abort(422)
 
 
@@ -118,11 +120,11 @@ def delete_drink(drink_id):
             'success': True,
             'delete': drink_id
         })
-    except:
+    except Exception:
         abort(422)
 
 
-## Error Handling
+# Error Handling
 
 @app.errorhandler(422)
 def unprocessable(error):
