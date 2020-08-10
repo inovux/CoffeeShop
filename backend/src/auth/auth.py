@@ -4,9 +4,9 @@ from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 
-AUTH0_DOMAIN = 'udacity-fsnd.auth0.com'
+AUTH0_DOMAIN = 'stfsnd.au.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'dev'
+API_AUDIENCE = 'coffeeshop'
 
 ## AuthError Exception
 
@@ -70,11 +70,6 @@ def check_permissions(permission, payload):
 
 
 def verify_decode_jwt(token):
-    # Set up variables used in this function
-    AUTH0_DOMAIN = 'stfsnd.au.auth0.com'
-    ALGORITHMS = ['RS256']
-    API_AUDIENCE = 'coffeeshop'
-
     # Get public key from auth0
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
